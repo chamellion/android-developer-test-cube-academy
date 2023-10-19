@@ -1,6 +1,7 @@
 <resources>
 	<!-- Base application theme. -->
-	<style name="Theme.CubeAcademy" parent="Theme.MaterialComponents.Light.NoActionBar">
+<!--	Upgraded theming to use material theme 3-->
+	<style name="Theme.CubeAcademy" parent="Theme.Material3.Light.NoActionBar">
 		<!-- Primary brand color. -->
 		<item name="colorPrimary">@color/green</item>
 		<item name="colorPrimaryVariant">@color/green_2</item>

@@ -50,6 +50,9 @@ class MainActivity : AppCompatActivity() {
 							SweetAlertDialog(applicationContext, SweetAlertDialog.ERROR_TYPE).apply {
 								titleText = "Error"
 								contentText = apiResult.error
+								setConfirmButton("Ok"){
+									it.dismissWithAnimation()
+								}
 								show()
 							}
 						}

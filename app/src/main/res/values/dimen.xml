@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="radio_button_margin_bottom">8dp</dimen>
+    <dimen name="radio_group_margin_top">16dp</dimen>
+    <dimen name="emoji_margin_start">16dp</dimen>
+    <dimen name="radio_button_margin_end">6dp</dimen>
+</resources>

@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -18,7 +19,10 @@ object AppModule {
 	@Singleton
 	@Provides
 	fun provideApi(): ApiService = OkHttpClient().newBuilder().apply {
+		//Added logging interceptor to show network traffic in logcat(for debugging)
+		val httpInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 		addInterceptor(AuthTokenInterceptor())
+		addInterceptor(httpInterceptor)
 	}.build().let {
 		Retrofit.Builder()
 			.client(it)

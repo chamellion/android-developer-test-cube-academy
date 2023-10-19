@@ -20,8 +20,8 @@ class Repository @Inject constructor(private val api: ApiService) {
 		return api.getAllNominees()
 	}
 
-	suspend fun createNomination(nomineeId: String, reason: String, process: String): Nomination? {
+	suspend fun createNomination(nomineeId: String, reason: String, process: String): Response<DataWrapper<Nomination>> {
 		// TODO: Write the code to create a new nomination using the api
-		return null
+		return api.createNomination(nomineeId, reason, process)
 	}
 }

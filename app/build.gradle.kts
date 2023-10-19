@@ -55,6 +55,7 @@ dependencies {
 	implementation("com.google.code.gson:gson:2.10.1")
 	implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 	implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+	implementation ("com.google.android.material:material:1.10.0")
 
 	//Needed extension for viewModel delegation and activity ktx extension functions
 	implementation ("androidx.activity:activity-ktx:1.8.0")
@@ -72,6 +73,12 @@ dependencies {
 
 	//Timber for logging
 	implementation("com.jakewharton.timber:timber:5.0.1")
+
+	//Logging interceptor to print network logs
+	implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+	//Custom Radio Button for rating bar
+	implementation("io.github.ihermandev:advanced-radio-group:1.0.0")
 
 	// ViewModel
 	implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")

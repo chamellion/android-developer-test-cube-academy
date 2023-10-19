@@ -17,4 +17,15 @@
 	<string name="nomination_submitted_body">Thank you for taking the time to fill out this form! Why not nominate another cube?</string>
     <string name="dropdown_tag">Cube\'s name</string>
 	<string name="compulsory_tag_indicator">*</string>
+    <string name="select_option">Select Option</string>
+    <string name="reason">Reason</string>
+	<string name="emoji_sad_face">🙁</string>
+	<string name="emoji_not_sure">😑</string>
+	<string name="emoji_good">😊</string>
+	<string name="emoji_very_good">😄</string>
+	<string name="fair">Fair</string>
+	<string name="not_sure">Not Sure</string>
+	<string name="good">Good</string>
+	<string name="very_good">Very Good</string>
+	<string name="very_unfair">Very Unfair</string>
 </resources>
