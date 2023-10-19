@@ -50,15 +50,28 @@
 			android:layout_marginTop="70dp"
 			android:src="@drawable/ic_empty" />
 
-		<TextView
+<!--		Added a frame layout for to stack text and loading indicator-->
+		<FrameLayout
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			style="@style/bold_headline_medium"
-			android:layout_marginTop="24dp"
-			android:text="@string/empty_body"
-			android:textAlignment="center"
-			android:textAllCaps="true"
-			android:textColor="@color/grey_dark" />
+			android:layout_height="wrap_content">
+			<TextView
+				android:id="@+id/display_text"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				style="@style/bold_headline_medium"
+				android:layout_marginTop="24dp"
+				android:text="@string/empty_body"
+				android:textAlignment="center"
+				android:textAllCaps="true"
+				android:textColor="@color/grey_dark" />
+			<com.google.android.material.progressindicator.CircularProgressIndicator
+				android:id="@+id/loading_indicator"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:indicatorColor="@color/black"
+				android:visibility="gone"
+				android:layout_gravity="center"/>
+		</FrameLayout>
 
 	</LinearLayout>
 

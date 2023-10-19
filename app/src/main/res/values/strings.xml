@@ -15,4 +15,6 @@
 	<string name="nomination_submitted">Nomination Submitted</string>
 	<string name="back_to_home">Back to home</string>
 	<string name="nomination_submitted_body">Thank you for taking the time to fill out this form! Why not nominate another cube?</string>
+    <string name="dropdown_tag">Cube\'s name</string>
+	<string name="compulsory_tag_indicator">*</string>
 </resources>

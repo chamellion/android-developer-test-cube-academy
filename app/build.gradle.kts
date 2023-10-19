@@ -42,6 +42,7 @@ android {
 	buildFeatures {
 		viewBinding = true
 		buildConfig = true
+		dataBinding = true
 	}
 }
 
@@ -55,6 +56,12 @@ dependencies {
 	implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 	implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+	//Needed extension for viewModel delegation and activity ktx extension functions
+	implementation ("androidx.activity:activity-ktx:1.8.0")
+
+	//Simple alert dialog for displaying different messages to end users
+	implementation("com.github.f0ris.sweetalert:library:1.6.2")
+
 	// Hilt
 	implementation("com.google.dagger:hilt-android:2.48")
 	kapt("com.google.dagger:hilt-compiler:2.48")
@@ -62,6 +69,12 @@ dependencies {
 	androidTestImplementation("com.google.dagger:hilt-android-testing:2.48")
 	kaptTest("com.google.dagger:hilt-android-compiler:2.48")
 	kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.48")
+
+	//Timber for logging
+	implementation("com.jakewharton.timber:timber:5.0.1")
+
+	// ViewModel
+	implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
 	testImplementation("junit:junit:4.13.2")
 	androidTestImplementation("androidx.test.ext:junit:1.1.5")

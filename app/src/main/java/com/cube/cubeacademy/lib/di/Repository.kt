@@ -1,20 +1,23 @@
 package com.cube.cubeacademy.lib.di
 
 import com.cube.cubeacademy.lib.api.ApiService
+import com.cube.cubeacademy.lib.models.DataWrapper
 import com.cube.cubeacademy.lib.models.Nomination
 import com.cube.cubeacademy.lib.models.Nominee
+import retrofit2.Response
+import javax.inject.Inject
 
-class Repository(val api: ApiService) {
+class Repository @Inject constructor(private val api: ApiService) {
 	// TODO: Add additional code if you need it
 
-	suspend fun getAllNominations(): List<Nomination> {
+	suspend fun getAllNominations(): Response<DataWrapper<List<Nomination>>> {
 		// TODO: Write the code to fetch the list nominations from the api
-		return emptyList()
+		return api.getAllNominations()
 	}
 
-	suspend fun getAllNominees(): List<Nominee> {
+	suspend fun getAllNominees(): Response<DataWrapper<List<Nominee>>> {
 		// TODO: Write the code to fetch list of all nominees from the api
-		return emptyList()
+		return api.getAllNominees()
 	}
 
 	suspend fun createNomination(nomineeId: String, reason: String, process: String): Nomination? {
