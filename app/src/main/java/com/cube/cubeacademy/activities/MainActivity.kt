@@ -1,5 +1,6 @@
 package com.cube.cubeacademy.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,12 +10,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.cube.cubeacademy.MainApplication
 import com.cube.cubeacademy.databinding.ActivityMainBinding
+import com.cube.cubeacademy.lib.adapters.NominationsRecyclerViewAdapter
 import com.cube.cubeacademy.lib.models.Nomination
+import com.cube.cubeacademy.lib.models.Nominee
 import com.cube.cubeacademy.utils.ApiResult
+import com.cube.cubeacademy.utils.isOnline
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.UUID
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -37,13 +43,24 @@ class MainActivity : AppCompatActivity() {
 			startActivity(Intent(this, CreateNominationActivity::class.java))
 		}
 
+		if (!isOnline()){
+			SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE).apply {
+				titleText = "No Connection"
+				contentText = "You don't seem to have an internet connection. Try coming online and try again"
+				setConfirmButton("Ok"){
+					it.dismissWithAnimation()
+				}
+				show()
+			}
+		}
+
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED){
 				mainActivityViewModel.viewState.collect{apiResult ->
 					when(apiResult){
 						is ApiResult.Loading -> {
 							binding.loadingIndicator.visibility = View.VISIBLE
-							binding.displayText.visibility = View.GONE
+							binding.emptyContainer.visibility = View.GONE
 						}
 						is ApiResult.Error -> {
 							binding.loadingIndicator.visibility = View.GONE
@@ -60,7 +77,16 @@ class MainActivity : AppCompatActivity() {
 							if (apiResult.data is List<*>){
 								val nominationLists = apiResult.data as? List<Nomination>
 								nominationLists?.let {nominationList ->
-									populateUI(nominationList)
+									Timber.d("List is empty: ${nominationList.isEmpty()}")
+									if (nominationList.isEmpty()){
+										binding.emptyContainer.visibility = View.VISIBLE
+									}else{
+										binding.emptyContainer.visibility = View.GONE
+										mainActivityViewModel.nomineeList.collect{
+											populateUI(nominationList, applicationContext, it)
+										}
+									}
+
 								}
 							}
 						}
@@ -71,12 +97,14 @@ class MainActivity : AppCompatActivity() {
 
 	}
 
-	private fun populateUI(nominationList: List<Nomination>) {
+	private fun populateUI(nominationList: List<Nomination>, context: Context, nomineeList: List<Nominee>) {
 		/**
 		 * TODO: Populate the UI with data in this function
 		 * 		 You need to fetch the list of user's nominations from the api and put the data in the recycler view
 		 * 		 And also add action to the "Create new nomination" button to go to the CreateNominationActivity
 		 */
-		Timber.d("Nomination list are $nominationList")
+		val adapter = NominationsRecyclerViewAdapter(nomineeList, context)
+		binding.nominationsList.adapter = adapter
+		adapter.submitList(nominationList)
 	}
 }

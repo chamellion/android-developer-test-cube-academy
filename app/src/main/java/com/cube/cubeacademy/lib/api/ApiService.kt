@@ -3,7 +3,6 @@ package com.cube.cubeacademy.lib.api
 import com.cube.cubeacademy.lib.models.DataWrapper
 import com.cube.cubeacademy.lib.models.Nomination
 import com.cube.cubeacademy.lib.models.Nominee
-import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -24,4 +23,5 @@ interface ApiService {
 		@Field("reason") reason: String,
 		@Field("process") process: String
 	): Response<DataWrapper<Nomination>>
+
 }

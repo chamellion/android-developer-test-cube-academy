@@ -2,27 +2,20 @@ package com.cube.cubeacademy.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.cube.cubeacademy.R
 import com.cube.cubeacademy.databinding.ActivityCreateNominationBinding
 import com.cube.cubeacademy.lib.di.Repository
-import com.cube.cubeacademy.lib.models.Nomination
 import com.cube.cubeacademy.lib.models.Nominee
-import com.cube.cubeacademy.utils.ApiResult
+import com.cube.cubeacademy.utils.isOnline
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -31,64 +24,50 @@ class CreateNominationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateNominationBinding
 
     private val createNominationViewModel: CreateNominationViewModel by viewModels()
+    private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
     @Inject
     lateinit var repository: Repository
 
-    /*Suppressing cast warning because type has been checked
-    on postman and its a list of Nomination
-     */
-    @Suppress("UNCHECKED_CAST")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.Theme_CubeAcademy)
 
         binding = ActivityCreateNominationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val bottomModalFragment = BottomSheetModal()
+                bottomModalFragment.show(supportFragmentManager, bottomModalFragment.tag)
+            }
+
+        }
+
+        onBackPressedDispatcher.addCallback(backPressedCallback)
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        if (!isOnline()){
+            val snackbar = Snackbar.make(binding.root, "You are offline. This app only works when you are online", Snackbar.LENGTH_INDEFINITE)
+            snackbar.show()
+        }
+
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                createNominationViewModel.viewState.collect { apiResult ->
-                    when (apiResult) {
-                        is ApiResult.Loading -> {
-                            binding.circularIndicator.visibility = View.VISIBLE
-                        }
-
-                        is ApiResult.Error -> {
-                            val errorMessage = apiResult.error
-                            binding.circularIndicator.visibility = View.GONE
-                            SweetAlertDialog(
-                                applicationContext,
-                                SweetAlertDialog.ERROR_TYPE
-                            ).apply {
-                                titleText = "Error"
-                                contentText = errorMessage ?: "Error loading nominee list"
-                                setConfirmButton("Ok") {
-                                    it.dismissWithAnimation()
-                                }
-                                show()
-                            }
-                        }
-
-                        is ApiResult.Success<*> -> {
-                            binding.circularIndicator.visibility = View.GONE
-                            if (apiResult.data is List<*>) {
-                                val nominationLists = apiResult.data as? List<Nominee>
-                                nominationLists?.let { nominationList ->
-                                    Timber.d("Nominee list are $nominationList")
-                                    val nomineeNames = nominationList.map {
-                                        "${it.firstName} ${it.lastName}"
-                                    }
-                                    populateUI(
-                                        binding,
-                                        nomineeNames,
-                                        createNominationViewModel,
-                                        nominationList
-                                    )
-                                }
-                            }
-                        }
+            mainActivityViewModel.nomineeList.collect { nominationList ->
+                nominationList.let {
+                    val nomineeNames = nominationList.map {
+                        "${it.firstName} ${it.lastName}"
                     }
+                    populateUI(
+                        binding,
+                        nomineeNames,
+                        createNominationViewModel,
+                        nominationList
+                    )
+
                 }
             }
         }
@@ -114,7 +93,7 @@ class CreateNominationActivity : AppCompatActivity() {
                 nomineeName
             )
         )
-        binding.radioGroupContainer.setOnCheckedChangeListener { group, checkedId ->
+        binding.radioGroupContainer.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.very_unfair -> {
                     feedbackValue = "very_unfair"
@@ -142,7 +121,10 @@ class CreateNominationActivity : AppCompatActivity() {
                 val reason = binding.reasonForChoosing.text.toString().trim()
                 val chosenNominee = binding.dropdownMenu.text.toString().trim()
                 if (reason.isBlank() || feedbackValue.isBlank() || chosenNominee.isBlank()) {
-                    SweetAlertDialog(this@CreateNominationActivity, SweetAlertDialog.ERROR_TYPE).apply {
+                    SweetAlertDialog(
+                        this@CreateNominationActivity,
+                        SweetAlertDialog.ERROR_TYPE
+                    ).apply {
                         titleText = "Validation Error"
                         contentText = "Please make sure all fields are correctly filled"
                         setConfirmButton("Ok") {
@@ -158,12 +140,20 @@ class CreateNominationActivity : AppCompatActivity() {
                             reason = reason,
                             process = feedbackValue,
                             nomineeList = nomineeList
-                        ) {nominee->
+                        ) { nominee ->
                             // TODO:
-                            if (nominee != null){
-                                startActivity(Intent(this@CreateNominationActivity, NominationSubmittedActivity::class.java))
-                            }else{
-                                SweetAlertDialog(this@CreateNominationActivity, SweetAlertDialog.ERROR_TYPE).apply {
+                            if (nominee != null) {
+                                startActivity(
+                                    Intent(
+                                        this@CreateNominationActivity,
+                                        NominationSubmittedActivity::class.java
+                                    ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                )
+                            } else {
+                                SweetAlertDialog(
+                                    this@CreateNominationActivity,
+                                    SweetAlertDialog.ERROR_TYPE
+                                ).apply {
                                     titleText = "Error"
                                     contentText = "One or more error has occurred"
                                     setConfirmButton("Ok") {
@@ -175,7 +165,10 @@ class CreateNominationActivity : AppCompatActivity() {
                         }
                     } catch (error: Exception) {
                         Timber.d(error)
-                        SweetAlertDialog(this@CreateNominationActivity, SweetAlertDialog.ERROR_TYPE).apply {
+                        SweetAlertDialog(
+                            this@CreateNominationActivity,
+                            SweetAlertDialog.ERROR_TYPE
+                        ).apply {
                             titleText = "Validation Error"
                             contentText =
                                 error.message ?: "Please make sure all fields are correctly filled"

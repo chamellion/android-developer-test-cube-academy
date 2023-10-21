@@ -28,4 +28,9 @@
 	<string name="good">Good</string>
 	<string name="very_good">Very Good</string>
 	<string name="very_unfair">Very Unfair</string>
+    <string name="nominee_name">%1$s %2$s</string>
+    <string name="are_you_sure">Are you sure?</string>
+	<string name="leave_page">if you leave this page, you will lose any progress made</string>
+	<string name="yes_leave">YES, LEAVE PAGE</string>
+	<string name="cancel">CANCEL</string>
 </resources>

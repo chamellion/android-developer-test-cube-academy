@@ -17,28 +17,6 @@ import javax.inject.Inject
 class CreateNominationViewModel @Inject constructor(private val repository: Repository) :
     ViewModel() {
 
-    private val _viewState: MutableStateFlow<ApiResult> = MutableStateFlow(ApiResult.Loading)
-    val viewState: StateFlow<ApiResult> = _viewState
-
-
-    init {
-        viewModelScope.launch {
-            try {
-                val response = repository.getAllNominees()
-                if (response.isSuccessful) {
-                    val value = response.body()
-                    val data = value?.data
-                    _viewState.value = ApiResult.Success(data)
-                } else {
-                    _viewState.value =
-                        ApiResult.Error("One or more error has occurred. Please try again later")
-                }
-            } catch (exception: Exception) {
-                Timber.d(exception)
-                _viewState.value = ApiResult.Error(exception.message)
-            }
-        }
-    }
 
     suspend fun createUserNomination(
         nomineeName: String,
