@@ -1,4 +1,4 @@
-package com.cube.cubeacademy.activities
+package com.cube.cubeacademy.activities.createnominationactivity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.cube.cubeacademy.R
+import com.cube.cubeacademy.activities.nominationsubmittedactivity.NominationSubmittedActivity
+import com.cube.cubeacademy.activities.nominationlistactivity.MainActivity
+import com.cube.cubeacademy.activities.nominationlistactivity.MainActivityViewModel
 import com.cube.cubeacademy.databinding.ActivityCreateNominationBinding
 import com.cube.cubeacademy.lib.di.Repository
 import com.cube.cubeacademy.lib.models.Nominee

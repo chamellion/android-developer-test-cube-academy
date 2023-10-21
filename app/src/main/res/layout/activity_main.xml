@@ -7,7 +7,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:background="@drawable/bg_green_page"
 	android:orientation="vertical"
-	tools:context=".activities.MainActivity">
+	tools:context=".activities.nominationlistactivity.MainActivity">
 
 	<androidx.appcompat.widget.Toolbar
 		android:layout_width="match_parent"

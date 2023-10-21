@@ -1,16 +1,10 @@
-package com.cube.cubeacademy.activities
+package com.cube.cubeacademy.activities.createnominationactivity
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.cube.cubeacademy.lib.di.Repository
 import com.cube.cubeacademy.lib.models.Nomination
 import com.cube.cubeacademy.lib.models.Nominee
-import com.cube.cubeacademy.utils.ApiResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

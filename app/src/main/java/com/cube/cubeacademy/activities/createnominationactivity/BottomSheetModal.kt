@@ -1,15 +1,13 @@
-package com.cube.cubeacademy.activities
+package com.cube.cubeacademy.activities.createnominationactivity
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import com.cube.cubeacademy.R
+import com.cube.cubeacademy.activities.nominationlistactivity.MainActivity
 import com.cube.cubeacademy.databinding.BottomModalMenuBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -56,7 +54,7 @@ class BottomSheetModal : BottomSheetDialogFragment() {
         super.onDestroyView()
     }
 
-    //Remove recently added the back of the view stack
+    //Remove recently added view from the view stack
     private fun removeBackgroundTint() {
         val rootView = (activity as? AppCompatActivity)?.window?.decorView?.rootView
         if (rootView is ViewGroup && rootView.childCount > 0) {

@@ -10,6 +10,13 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiService {
+
+	/*
+	Response from api were wrapped in a retrofit
+	Response wrapper which will provide more details
+	about if http status codes and error returned back from
+	server
+	 */
 	@GET("api/nomination")
 	suspend fun getAllNominations(): Response<DataWrapper<List<Nomination>>>
 

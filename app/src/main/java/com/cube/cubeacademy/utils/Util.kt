@@ -7,7 +7,7 @@ import android.net.NetworkCapabilities
 
 /***
  * Extension function that checks if internet connectivity is active
- * @return if the phone true if device has an active internet connection or
+ * @return  true if device has an active internet connection or
  * false otherwise
  */
 fun Context.isOnline(): Boolean {

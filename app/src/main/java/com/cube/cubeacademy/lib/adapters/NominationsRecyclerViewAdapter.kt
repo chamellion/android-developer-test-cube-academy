@@ -10,8 +10,6 @@ import com.cube.cubeacademy.R
 import com.cube.cubeacademy.databinding.ViewNominationListItemBinding
 import com.cube.cubeacademy.lib.models.Nomination
 import com.cube.cubeacademy.lib.models.Nominee
-import dagger.hilt.android.qualifiers.ApplicationContext
-import timber.log.Timber
 import javax.inject.Inject
 
 class NominationsRecyclerViewAdapter @Inject constructor(
@@ -40,7 +38,6 @@ class NominationsRecyclerViewAdapter @Inject constructor(
             val nomineeName = nomineeList.find { nominee ->
                 nominee.nomineeId == item.nomineeId
             }
-            Timber.d("Gotten name is $nomineeName")
             name.text = context.getString(
                 R.string.nominee_name,
                 nomineeName?.firstName,

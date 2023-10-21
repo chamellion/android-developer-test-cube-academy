@@ -1,18 +1,13 @@
-package com.cube.cubeacademy.activities
+package com.cube.cubeacademy.activities.nominationlistactivity
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cube.cubeacademy.MainApplication
 import com.cube.cubeacademy.lib.di.Repository
 import com.cube.cubeacademy.lib.models.Nominee
 import com.cube.cubeacademy.utils.ApiResult
 import com.cube.cubeacademy.utils.isOnline
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

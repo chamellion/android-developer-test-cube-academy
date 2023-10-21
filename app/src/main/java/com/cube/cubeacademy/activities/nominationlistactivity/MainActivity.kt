@@ -1,4 +1,4 @@
-package com.cube.cubeacademy.activities
+package com.cube.cubeacademy.activities.nominationlistactivity
 
 import android.content.Context
 import android.content.Intent
@@ -10,7 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import cn.pedant.SweetAlert.SweetAlertDialog
-import com.cube.cubeacademy.MainApplication
+import com.cube.cubeacademy.activities.createnominationactivity.CreateNominationActivity
 import com.cube.cubeacademy.databinding.ActivityMainBinding
 import com.cube.cubeacademy.lib.adapters.NominationsRecyclerViewAdapter
 import com.cube.cubeacademy.lib.models.Nomination
@@ -20,7 +20,6 @@ import com.cube.cubeacademy.utils.isOnline
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.UUID
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -31,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 	private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
 	/*Suppressing cast warning because type has been checked
-	on postman and its a list of Nomination
+	on postman and its a list of Nomination as opposed to using a
+	wild card due to erasure at runtime of kotlin generics
 	 */
 	@Suppress("UNCHECKED_CAST")
 	override fun onCreate(savedInstanceState: Bundle?) {

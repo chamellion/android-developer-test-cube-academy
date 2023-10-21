@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
-    tools:context=".activities.CreateNominationActivity">
+    tools:context=".activities.createnominationactivity.CreateNominationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

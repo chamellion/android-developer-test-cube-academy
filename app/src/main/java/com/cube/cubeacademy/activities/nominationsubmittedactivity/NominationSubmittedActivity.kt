@@ -1,8 +1,10 @@
-package com.cube.cubeacademy.activities
+package com.cube.cubeacademy.activities.nominationsubmittedactivity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.cube.cubeacademy.activities.createnominationactivity.CreateNominationActivity
+import com.cube.cubeacademy.activities.nominationlistactivity.MainActivity
 import com.cube.cubeacademy.databinding.ActivityNominationSubmittedBinding
 
 class NominationSubmittedActivity : AppCompatActivity() {
